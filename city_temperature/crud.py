@@ -57,7 +57,7 @@ def update_city(
         models.City
     ).filter(models.City.id == city_id).first()
     if db_city:
-        for key, value in city.dict().items():
+        for key, value in city.model_dump().items():
             setattr(db_city, key, value)
         db.commit()
         db.refresh(db_city)
@@ -94,7 +94,7 @@ def create_temperature(
         db: Session,
         temperature: TemperatureCreate
 ) -> models.Temperature:
-    db_temperature = models.Temperature(**temperature.dict())
+    db_temperature = models.Temperature(**temperature.model_dump())
     db.add(db_temperature)
     db.commit()
     db.refresh(db_temperature)
